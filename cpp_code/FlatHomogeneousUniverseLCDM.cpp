@@ -262,12 +262,20 @@ double FlatHomogeneousUniverseLCDM::rho_r_of_a(double a){
 *******************************************************************************************************************************************************/
 
 
+// double FlatHomogeneousUniverseLCDM::rho_L_of_a(double a){
+  
+//   double w = this->w_L_of_a(a);
+  
+//   return this->cosmology.Omega_L/pow(a, 3.0*(1.0+w));
+  
+// }
+
+// replace static w(a) with integrated form 
+
 double FlatHomogeneousUniverseLCDM::rho_L_of_a(double a){
-  
-  double w = this->w_L_of_a(a);
-  
-  return this->cosmology.Omega_L/pow(a, 3.0*(1.0+w));
-  
+  double w0 = this->cosmology.w0;
+  double w1 = this->cosmology.w1;
+  return this->cosmology.Omega_L * pow(a, -3.0*(1.0+w0+w1)) * exp(3.0*w1*(a-1.0));
 }
 
 
