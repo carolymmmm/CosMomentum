@@ -41,8 +41,8 @@ static double c_in_si =  c_in_si_over_e8*1.0e8;
 static double c_over_e5 = c_in_si/1.0e5;
 static double c_over_e5_sq = c_over_e5*c_over_e5;
 static double M0_crit_in_Hubble_radius_in_Msol_over_h = 0.5*pow(c_in_si_over_e8,3)/4.3009*1.0e22; // critical mass within Hubble radius today; in units of M_solar/h
-//static double c1_IA_in_units_of_invRho_crit = 5.0e-14*2.7754e11; // see wikipedia on critical density as well as equation A.5 of https://arxiv.org/pdf/2304.01187
-static double c1_IA_in_units_of_invRho_crit = 0.0134; // see wikipedia on critical density as well as equation A.5 of https://arxiv.org/pdf/2304.01187
+static double c1_IA_in_units_of_invRho_crit = 5.0e-14*2.7754e11; // see wikipedia on critical density as well as equation A.5 of https://arxiv.org/pdf/2304.01187
+//static double c1_IA_in_units_of_invRho_crit = 0.0134; // see wikipedia on critical density as well as equation A.5 of https://arxiv.org/pdf/2304.01187
 
   /*
     TOM WAS HERE
