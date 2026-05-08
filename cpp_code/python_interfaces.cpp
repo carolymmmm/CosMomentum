@@ -1279,7 +1279,7 @@ extern "C" void return_convergence_PDF_direct(double* kappa_values, double* PDF,
   double a_initial = 0.000025;
   double a_final = 1.0;
   double Omega_L = 1.0 - Omega_m;
-  double Omega_r = 0.0;
+  double Omega_r = 4*10**(-5); // to match CAMB
   double f_NL = 0.0;
   double var_NL_rescale = 1.0;
   
