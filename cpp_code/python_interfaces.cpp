@@ -1273,7 +1273,7 @@ extern "C" void return_convergence_PDF_from_source_sample(double* kappa_values, 
 
 
 // HERE!
-extern "C" void return_convergence_PDF_direct(double* kappa_values, double* PDF, const double* z_vals, const double* n_vals_5, int length, double theta_in_arcmin, double Omega_m, double Omega_b, double sigma_8, double n_s, double h_100, double w0, double w1, double A_IA){
+extern "C" void return_convergence_PDF_direct(double* kappa_values, double* PDF, double* k, double* z, double* P_L_kz_vals, double* P_NL_kz_vals, int n_k, int n_z,const double* z_vals, const double* n_vals_5, int length, double theta_in_arcmin, double Omega_m, double Omega_b, double sigma_8, double n_s, double h_100, double w0, double w1, double A_IA){
   
   // creating a Universe:
   double a_initial = 0.000025;
@@ -1285,6 +1285,26 @@ extern "C" void return_convergence_PDF_direct(double* kappa_values, double* PDF,
   
   cosmological_model cosmo = set_cosmological_model(Omega_m, Omega_b, Omega_r, Omega_L, sigma_8, n_s, h_100, w0, w1);    
   FlatInhomogeneousUniverseLCDM* uni = new FlatInhomogeneousUniverseLCDM(cosmo, a_initial, a_final, 1);
+
+  vector<double> k_values(n_k, 0.0);
+  vector<double> z_values(n_z, 0.0);
+  vector<vector<double> > P_L_kz_values(n_k, vector<double>(n_z, 0.0));
+  vector<vector<double> > P_NL_kz_values(n_k, vector<double>(n_z, 0.0));
+
+  for(int i = 0; i < n_k; i++){
+    k_values[i] = k[i]*constants::c_over_e5;
+  }
+  for(int i = 0; i < n_z; i++){
+    z_values[i] = z[i];
+  }
+  for(int i = 0; i < n_k; i++){
+    for(int j = 0; j < n_z; j++){
+      P_L_kz_values[i][j] = P_L_kz_vals[i*n_z + j]/pow(constants::c_over_e5,3);
+      P_NL_kz_values[i][j] = P_NL_kz_vals[i*n_z + j]/pow(constants::c_over_e5,3);
+    }
+  }
+
+  uni->set_power_grid(&k_values, &z_values, &P_L_kz_values, &P_NL_kz_values);
   
   // bias model irrelevant here, but needed to create galaxy sample
   BIAS_MODEL b_model = static_cast<BIAS_MODEL>(0);
